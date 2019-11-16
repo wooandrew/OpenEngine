@@ -1,0 +1,18 @@
+// Readability is King.
+
+-> Window resize callback
+-> Make function for std::shared_ptr<Texture>
+-> Make function for std::shared_ptr<Sprite>
+-> Splash screen animation
+-> Sprite sheet animation
+-> GLSL parser
+
+
+INCLUDE STRUCTURE
+
+-> declaration header
+
+-> C++ Standard Library Headers
+-> Include Libraries
+
+-> Related Libraries (ie, OpenEngine headers in OpenEngine)
