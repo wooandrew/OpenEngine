@@ -1,4 +1,4 @@
-<img sytle="width:100%" src="https://media.discordapp.net/attachments/645325484875448326/645331274742890527/oelogoblack.png" />
+<img sytle="width:100%" src="https://media.discordapp.net/attachments/645325484875448326/645363334635454486/oelogoblack.png" />
 <div style="width:100%;display:flex;justify-content:center;">
 
 ![GitHub top language](https://img.shields.io/github/languages/top/wooandrew/OpenEngine)
