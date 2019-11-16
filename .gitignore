@@ -9,6 +9,9 @@
 [Ii]ncludes/
 demo/
 
+# other
+CMakeSettings.json
+
 # User-specific files
 *.rsuser
 *.suo
