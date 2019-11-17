@@ -230,6 +230,22 @@ namespace OpenEngine {
 		Graphics::DrawIndexed(RenderData->QuadVertexArray);
 	}
 
+	void Render2D::RenderButton(const std::shared_ptr<Button>& button) {
+
+		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
+		button->Bind();
+
+		float tempWidth = static_cast<float>(button->GetDimensions().width)* button->GetScale().x;
+		float tempHeight = static_cast<float>(button->GetDimensions().height) * button->GetScale().y;
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), button->GetPosition()) * glm::scale(glm::mat4(1.0f), { tempWidth, tempHeight, 1.0f });
+
+		RenderData->TextureShader->SetMat4("u_Transform", transform);
+
+		RenderData->QuadVertexArray->Bind();
+		Graphics::DrawIndexed(RenderData->QuadVertexArray);
+	}
+
 	void Render2D::RenderTexture(const glm::vec2& position, const std::shared_ptr<Texture>& texture) {
 		RenderTexture({ position.x, position.y, 0.0f }, texture);
 	}

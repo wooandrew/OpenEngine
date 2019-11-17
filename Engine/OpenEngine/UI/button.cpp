@@ -38,46 +38,46 @@
  * End License
 **/
 
-#pragma once
+#include "button.hpp"
 
-#ifndef OPEN_ENGINE_2D_TEXTURE_CHPP
-#define OPEN_ENGINE_2D_TEXTURE_CHPP
-
-#include <string>
-
-#include <GLAD/glad.h>
-#include <ASWU/utilities.hpp>
+#include <OpenEngine/engine.hpp>
+#include <OpenEngine/Input/mouse.hpp>
+#include <OpenEngine/Input/keymap.hpp>
 
 namespace OpenEngine {
 
-	class Texture {
+	Button::Button(const std::string& path, const glm::vec3& position, const glm::vec2& scale) : Texture(path) {
+		this->position = position;
+		this->scale = scale;
+	}
 
-		/// OpenEngine -> Basic Texture Loader Class \\\
+	const glm::vec3& Button::GetPosition() const {
+		return position;
+	}
+	const glm::vec2& Button::GetScale() const {
+		return scale;
+	}
 
-	public:
+	void Button::SetPosition(const glm::vec3& position) {
+		this->position = position;
+	}
+	void Button::SetScale(const glm::vec2& scale) {
+		this->scale = scale;
+	}
 
-		Texture() = default;
-		Texture(const unsigned int width, const unsigned int height);
-		Texture(const std::string texturePath);
-		~Texture();
+	const bool Button::IsPressed() const {
 
-		const utilities::Dimensions2D<unsigned int>& GetDimensions() const;
+		int mouseX = Mouse::GetMouseX();
+		int mouseY = Mouse::GetMouseY();
 
-		void SetData(void* data, unsigned int size);
-		void Bind(unsigned int slot = 0) const;
+		int xMax = position.x + (TextureDimensions.width * scale.x) / 2;
+		int xMin = position.x - (TextureDimensions.width * scale.x) / 2;
+		int yMax = position.y + (TextureDimensions.height * scale.y) / 2;
+		int yMin = position.y - (TextureDimensions.height * scale.y) / 2;
 
-	protected:
+		if ((mouseX < xMax) && (mouseX > xMin) && (mouseY < yMax) && (mouseY > yMin))
+			return Mouse::ButtonIsPressed(KeyMap::KM_MouseLeft);
 
-		std::string TexturePath;
-		utilities::Dimensions2D<unsigned int> TextureDimensions;
-
-	private:
-
-		unsigned int RendererID;
-
-		GLenum InternalFormat;
-		GLenum DataFormat;
-	};
+		return false;
+	}
 }
-
-#endif // !OPEN_ENGINE_2D_TEXTURE_CHPP

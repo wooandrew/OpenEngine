@@ -68,14 +68,12 @@ namespace OpenEngine {
 		void EndRender() const;
 
 		GLFWwindow* GetWindow();
-		utilities::Dimensions2D<int> GetWindowDimensions() const;
+		static utilities::Dimensions2D<int> WindowDimensions;
 
 	private:
 
 		GLFWwindow* window;
-
 		std::string WindowTitle;
-		utilities::Dimensions2D<int> WindowDimensions;
 	};
 }
 

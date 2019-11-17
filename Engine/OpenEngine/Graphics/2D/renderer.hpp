@@ -48,6 +48,8 @@
 //#include <GLFW/src/glfw3.h>
 #include <GLM/glm.hpp>
 
+#include <OpenEngine/UI/button.hpp>
+
 #include <OpenEngine/Graphics/2D/orthocam.hpp>
 #include <OpenEngine/Graphics/2D/shader.hpp>
 #include <OpenEngine/Graphics/2D/splashscreen.hpp>
@@ -77,6 +79,8 @@ namespace OpenEngine {
 		static void Fade(GLFWwindow* window, const glm::vec3& position, const glm::vec2& scale, const std::shared_ptr<Texture>& texture, float fadetime = 10);
 
 		static void RenderSprite(const std::shared_ptr<Sprite>& sprite);
+
+		static void RenderButton(const std::shared_ptr<Button>& button);
 
 		static void RenderTexture(const glm::vec2& position, const std::shared_ptr<Texture>& texture);
 		static void RenderTexture(const glm::vec3& position, const std::shared_ptr<Texture>& texture);

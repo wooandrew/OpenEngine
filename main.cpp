@@ -51,6 +51,8 @@
 #include <OpenEngine/Input/mouse.hpp>
 #include <OpenEngine/Input/input_macros.hpp>
 
+#include <OpenEngine/UI/button.hpp>
+
 #include <OpenEngine/Graphics/graphics.hpp>
 #include <OpenEngine/Graphics/2D/renderer.hpp>
 #include <OpenEngine/Graphics/2D/splashscreen.hpp>
@@ -139,10 +141,15 @@ int main() {
 	OpenEngine::Audio::init();
 	OpenEngine::Graphics::init();
 	OpenEngine::Render2D::init();
+	OpenEngine::Mouse::init(OpenEngine::Engine::WindowDimensions);
 
 	// Initialize Primary Camera
-	OpenEngine::OrthoCam PrimaryOrthoCam(static_cast<float>(-engine.GetWindowDimensions().width / 2.f), static_cast<float>(engine.GetWindowDimensions().width / 2.f), 
-		static_cast<float>(-engine.GetWindowDimensions().height / 2.f), static_cast<float>(engine.GetWindowDimensions().height / 2.f), 500.f);
+	OpenEngine::OrthoCam PrimaryOrthoCam(static_cast<float>(-OpenEngine::Engine::WindowDimensions.width / 2.f), static_cast<float>(OpenEngine::Engine::WindowDimensions.width / 2.f), 
+		static_cast<float>(-OpenEngine::Engine::WindowDimensions.height / 2.f), static_cast<float>(OpenEngine::Engine::WindowDimensions.height / 2.f), 500.f);
+
+	// Button Cam
+	OpenEngine::OrthoCam ButtonCam(static_cast<float>(-OpenEngine::Engine::WindowDimensions.width / 2.f), static_cast<float>(OpenEngine::Engine::WindowDimensions.width / 2.f),
+		static_cast<float>(-OpenEngine::Engine::WindowDimensions.height / 2.f), static_cast<float>(OpenEngine::Engine::WindowDimensions.height / 2.f), 500.f);
 
 	// Initialize Delta Time
 	utilities::DeltaTime dt;
@@ -150,7 +157,7 @@ int main() {
 	bool run = true;
 
 	auto splashLogo1 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Pictures\logo1819.png)", 10.f, { 0.75f, 0.75f, 0.f });
-	auto splashLogo2 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Pictures\oelogo.png)", 10.f, { 0.75f, 0.75f, 0.f });
+	auto splashLogo2 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\Logo\oelogo.png)", 10.f, { 0.75f, 0.75f, 0.f });
 	auto splashLogo3 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\demo\splash.png)", 10.f);
 	auto splash_logo1819 = std::make_shared<OpenEngine::SplashScreen>(splashLogo1);
 	auto splash_logoh19 = std::make_shared<OpenEngine::SplashScreen>(splashLogo2);
@@ -158,6 +165,9 @@ int main() {
 
 	OpenEngine::Sprite sprite(R"(C:\Users\Andrew\Pictures\aw.png)", { 0, 0 }, { 0.2f, 0.2f }, 500.f);
 	auto spritePtr = std::make_shared<OpenEngine::Sprite>(sprite);
+
+	OpenEngine::Button button(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\test.png)", { 0, 0, 0.1 });
+	auto buttonPtr = std::make_shared<OpenEngine::Button>(button);
 
 	OpenEngine::Graphics::BeginRender();
 	OpenEngine::Render2D::StartScene(PrimaryOrthoCam);
@@ -176,13 +186,18 @@ int main() {
 
 		// *** GAME LOGIC *** //
 		if (OpenEngine::Keyboard::KeyIsPressed(OpenEngine::OEKeyboardKeys::OE_KEY_K)) {
-			zoom += 0.1f * dt.GetDeltaTime();
-			PrimaryOrthoCam.SetZoom(zoom, engine.GetWindowDimensions());
+			zoom += 0.5f * dt.GetDeltaTime();
+			PrimaryOrthoCam.SetZoom(zoom, OpenEngine::Engine::WindowDimensions);
 		}
 		else if (OpenEngine::Keyboard::KeyIsPressed(OpenEngine::OEKeyboardKeys::OE_KEY_L)) {
-			zoom -= 0.1f * dt.GetDeltaTime();
-			PrimaryOrthoCam.SetZoom(zoom, engine.GetWindowDimensions());
+			zoom -= 0.5f * dt.GetDeltaTime();
+			PrimaryOrthoCam.SetZoom(zoom, OpenEngine::Engine::WindowDimensions);
 		}
+
+		int counter = 0;
+
+		if (button.IsPressed())
+			std::cout << "Wowzers! " << counter++ << std::endl;
 
 		// *** GAME LOGIC *** //
 
@@ -197,11 +212,15 @@ int main() {
 
 		// *** RENDER LOGIC *** //
 		OpenEngine::Graphics::BeginRender();
+
 		OpenEngine::Render2D::StartScene(PrimaryOrthoCam);
-
 		OpenEngine::Render2D::RenderSprite(spritePtr);
-
 		OpenEngine::Render2D::EndScene();
+
+		OpenEngine::Render2D::StartScene(ButtonCam);
+		OpenEngine::Render2D::RenderButton(buttonPtr);
+		OpenEngine::Render2D::EndScene();
+
 		OpenEngine::Graphics::EndRender(engine.GetWindow());
 		// *** RENDER LOGIC *** //
 	}

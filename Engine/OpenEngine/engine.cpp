@@ -45,6 +45,8 @@
 
 namespace OpenEngine {
 
+	utilities::Dimensions2D<int> Engine::WindowDimensions = utilities::make_2d_dimension<int>(1000, 618);
+
 	Engine::Engine(std::string windowTitle, int windowWidth, int windowHeight) {
 		WindowTitle = windowTitle;
 		WindowDimensions = utilities::make_2d_dimension<int>(windowWidth, windowHeight);
@@ -115,9 +117,5 @@ namespace OpenEngine {
 
 	GLFWwindow* Engine::GetWindow() {
 		return window;
-	}
-
-	utilities::Dimensions2D<int> Engine::GetWindowDimensions() const {
-		return WindowDimensions;
 	}
 }

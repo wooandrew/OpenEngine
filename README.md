@@ -19,7 +19,8 @@ simple game.
 > OpenEngine was built on CMake using the MSVC C++ Compiler.\
 > This is to attempt OS cross-compadibility, however, the project\
 > itself was built on and is optimized for Windows. The project has \
-> not been tested on other operating systems (macOS, Linux).
+> not been tested on other operating systems (macOS, Linux), but \
+> should work in theory.
 
 ## Dependencies
 OpenEngine uses several dependencies. Here is a list:
@@ -48,6 +49,7 @@ you can do.
 - Audio playback (hoorah irrKlang)
 - Easy splash screens (I'm really proud of this one)
 - Basic orthographic camera (should work for most 2D games)
+- A very, very rudimentary button class
 
 #### Stuff I plan to add
 
@@ -57,10 +59,12 @@ In (hopefully) the next major update:
 - "Animatable" splash screens
 - Window resizing capability (I was too lazy to add it)
 - Scroll wheel support
+- Font/text rendering
 
 In the near future:
 
 - Joystick support
+- UI Elements (text box, menus, etc.)
 - Other stuff probably
 
 In the very, very distant future:

@@ -40,44 +40,39 @@
 
 #pragma once
 
-#ifndef OPEN_ENGINE_2D_TEXTURE_CHPP
-#define OPEN_ENGINE_2D_TEXTURE_CHPP
+#ifndef OPEN_ENGINE_UI_BUTTON
+#define OPEN_ENGINE_UI_BUTTON
 
-#include <string>
+#include <iostream>
 
-#include <GLAD/glad.h>
-#include <ASWU/utilities.hpp>
+#include <GLM/glm.hpp>
+
+#include <OpenEngine/Graphics/2D/texture.hpp>
 
 namespace OpenEngine {
 
-	class Texture {
+	class Button : public Texture {
 
-		/// OpenEngine -> Basic Texture Loader Class \\\
+		/// OpenEngine -> Basic UI button \\\
 
 	public:
 
-		Texture() = default;
-		Texture(const unsigned int width, const unsigned int height);
-		Texture(const std::string texturePath);
-		~Texture();
+		Button() = default;
+		Button(const std::string& path, const glm::vec3& position, const glm::vec2& scale = glm::vec2(1.f));
 
-		const utilities::Dimensions2D<unsigned int>& GetDimensions() const;
+		const glm::vec3& GetPosition() const;
+		const glm::vec2& GetScale() const;
 
-		void SetData(void* data, unsigned int size);
-		void Bind(unsigned int slot = 0) const;
+		void SetPosition(const glm::vec3& position);
+		void SetScale(const glm::vec2& scale);
 
-	protected:
-
-		std::string TexturePath;
-		utilities::Dimensions2D<unsigned int> TextureDimensions;
+		const bool IsPressed() const;
 
 	private:
 
-		unsigned int RendererID;
-
-		GLenum InternalFormat;
-		GLenum DataFormat;
+		glm::vec3 position;
+		glm::vec2 scale;
 	};
 }
 
-#endif // !OPEN_ENGINE_2D_TEXTURE_CHPP
+#endif // !OPEN_ENGINE_UI_BUTTON

@@ -41,12 +41,19 @@
 #include "mouse.hpp"
 
 namespace OpenEngine {
+
 	double Mouse::x = 0;
 	double Mouse::y = 0;
 
 	bool Mouse::Buttons[GLFW_MOUSE_BUTTON_LAST] = { 0 };
 	bool Mouse::ButtonsDown[GLFW_MOUSE_BUTTON_LAST] = { 0 };
 	bool Mouse::ButtonsUp[GLFW_MOUSE_BUTTON_LAST] = { 0 };
+
+	utilities::Dimensions2D<int> Mouse::WindowDimensions = utilities::make_2d_dimension<int>(1000, 618);
+
+	void Mouse::init(utilities::Dimensions2D<int> windowDimensions) {
+		WindowDimensions = windowDimensions;
+	}
 
 	void Mouse::MousePositionCallback(GLFWwindow* window, double _x, double _y) {
 
@@ -78,10 +85,10 @@ namespace OpenEngine {
 	}
 
 	double Mouse::GetMouseX() {
-		return x;
+		return x - WindowDimensions.width / 2;
 	}
 	double Mouse::GetMouseY() {
-		return y;
+		return y - WindowDimensions.height / 2;
 	}
 
 	bool Mouse::ButtonDown(int button) {

@@ -38,6 +38,10 @@ add_library(
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Input/mouse.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Input/mouse.cpp
 
+	# User-Interface
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/UI/button.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/UI/button.cpp
+
 	# Graphics
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/graphics.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/graphics.cpp
