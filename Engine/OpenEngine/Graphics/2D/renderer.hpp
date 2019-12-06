@@ -71,7 +71,7 @@ namespace OpenEngine {
 		static void StartScene(const OrthoCam& camera);
 		static void EndScene();
 
-		static void RenderSplashScreens(GLFWwindow* window, const glm::vec2& position, const std::vector<std::shared_ptr<SplashScreen>>& splashScreens);
+		static void RenderSplashScreens(GLFWwindow* window, const glm::vec2& position, const std::vector<std::shared_ptr<SplashScreen>>& SplashScreens);
 
 		static void Fade(GLFWwindow* window, const glm::vec2& position, const std::shared_ptr<Texture>& texture, float fadetime = 10);
 		static void Fade(GLFWwindow* window, const glm::vec3& position, const std::shared_ptr<Texture>& texture, float fadetime = 10);
@@ -89,8 +89,6 @@ namespace OpenEngine {
 
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
-		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture);
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture);
 	};
 }
 

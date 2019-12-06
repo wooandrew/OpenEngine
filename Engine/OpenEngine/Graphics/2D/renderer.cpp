@@ -99,9 +99,9 @@ namespace OpenEngine {
 
 	void Render2D::EndScene() { }
 
-	void Render2D::RenderSplashScreens(GLFWwindow* window, const glm::vec2& position, const std::vector<std::shared_ptr<SplashScreen>>& splashScreens) {
+	void Render2D::RenderSplashScreens(GLFWwindow* window, const glm::vec2& position, const std::vector<std::shared_ptr<SplashScreen>>& SplashScreens) {
 
-		for (auto splash : splashScreens) {
+		for (auto& splash : SplashScreens) {
 
 			utilities::DeltaTime fadetimer;
 
@@ -119,10 +119,10 @@ namespace OpenEngine {
 				alpha = std::sin((timePassed * period) - (glm::pi<float>() / splash->GetFadeTime()));
 
 				RenderData->TextureShader->SetFloat4("u_Color", { 1.f, 1.f, 1.f, alpha });
-				splash->Bind();
+				splash->GetTexture()->Bind();
 
-				float tempWidth = static_cast<float>(splash->GetDimensions().width)* splash->GetScale().x;
-				float tempHeight = static_cast<float>(splash->GetDimensions().height)* splash->GetScale().y;
+				float tempWidth = static_cast<float>(splash->GetTexture()->GetDimensions().width) * splash->GetScale().x;
+				float tempHeight = static_cast<float>(splash->GetTexture()->GetDimensions().height) * splash->GetScale().y;
 
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), { position.x, position.y, -0.1f }) * glm::scale(glm::mat4(1.0f), { tempWidth, tempHeight, 1.0f });
 				RenderData->TextureShader->SetMat4("u_Transform", transform);
@@ -186,8 +186,8 @@ namespace OpenEngine {
 
 		float timePassed = 0;
 
-		float tempWidth = static_cast<float>(texture->GetDimensions().width)* scale.x;
-		float tempHeight = static_cast<float>(texture->GetDimensions().height)* scale.y;
+		float tempWidth = static_cast<float>(texture->GetDimensions().width) * scale.x;
+		float tempHeight = static_cast<float>(texture->GetDimensions().height) * scale.y;
 
 		while (timePassed < (fadetime - (fadetime / 4))) {
 
@@ -214,10 +214,10 @@ namespace OpenEngine {
 	void Render2D::RenderSprite(const std::shared_ptr<Sprite>& sprite) {
 
 		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
-		sprite->Bind();
+		sprite->GetTexture()->Bind();
 
-		float scaleX = static_cast<float>(sprite->GetDimensions().width)* sprite->GetScale().x;
-		float scaleY = static_cast<float>(sprite->GetDimensions().height)* sprite->GetScale().y;
+		float scaleX = static_cast<float>(sprite->GetTexture()->GetDimensions().width) * sprite->GetScale().x;
+		float scaleY = static_cast<float>(sprite->GetTexture()->GetDimensions().height) * sprite->GetScale().y;
 		float scaleZ = 1.f * sprite->GetScale().z;
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), sprite->GetPosition());
@@ -235,7 +235,7 @@ namespace OpenEngine {
 		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		button->Bind();
 
-		float tempWidth = static_cast<float>(button->GetDimensions().width)* button->GetScale().x;
+		float tempWidth = static_cast<float>(button->GetDimensions().width) * button->GetScale().x;
 		float tempHeight = static_cast<float>(button->GetDimensions().height) * button->GetScale().y;
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), button->GetPosition()) * glm::scale(glm::mat4(1.0f), { tempWidth, tempHeight, 1.0f });
@@ -271,8 +271,8 @@ namespace OpenEngine {
 		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		texture->Bind();
 
-		float tempWidth = static_cast<float>(texture->GetDimensions().width)* scale.x;
-		float tempHeight = static_cast<float>(texture->GetDimensions().height)* scale.y;
+		float tempWidth = static_cast<float>(texture->GetDimensions().width) * scale.x;
+		float tempHeight = static_cast<float>(texture->GetDimensions().height) * scale.y;
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { tempWidth, tempHeight, 1.0f });
 		RenderData->TextureShader->SetMat4("u_Transform", transform);
@@ -293,20 +293,6 @@ namespace OpenEngine {
 		RenderData->TextureShader->SetMat4("u_Transform", transform);
 		RenderData->QuadVertexArray->Bind();
 
-		Graphics::DrawIndexed(RenderData->QuadVertexArray);
-	}
-	void Render2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture) {
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture);
-	}
-	void Render2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture) {
-
-		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
-		texture->Bind();
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		RenderData->TextureShader->SetMat4("u_Transform", transform);
-
-		RenderData->QuadVertexArray->Bind();
 		Graphics::DrawIndexed(RenderData->QuadVertexArray);
 	}
 }

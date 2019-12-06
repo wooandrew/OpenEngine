@@ -89,6 +89,9 @@ namespace OpenEngine {
 		}
 	}
 
+	const float OrthoCam::GetSpeed() const {
+		return speed;
+	}
 	void OrthoCam::SetSpeed(float speed) {
 		this->speed = speed;
 	}
@@ -99,7 +102,7 @@ namespace OpenEngine {
 		ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 	}
 
-	void OrthoCam::SetZoom(float zoom, utilities::Dimensions2D<int> windowSize) {
+	void OrthoCam::SetZoom(float zoom, const utilities::Dimensions2D<int>& windowSize) {
 		
 		if (zoom > 0.0f) {
 		

@@ -18,21 +18,28 @@ simple game.
 
 > OpenEngine was built on CMake using the MSVC C++ Compiler.\
 > This is to attempt OS cross-compadibility, however, the project\
-> itself was built on and is optimized for Windows. The project has \
-> not been tested on other operating systems (macOS, Linux), but \
-> should work in theory.
+> itself was built on and is optimized for Windows. In theory, this\
+> project should work on other operating systems (macOS, Linux) but\
+> has not been tested on such systems.
+
+`Version 0.1.0`\
+`Does OpenEngine Use Semantic Versioning? Not currently.`
+
 
 ## Dependencies
 OpenEngine uses several dependencies. Here is a list:
-
-- `GLFW`
-- `GLAD`
-- `stb_image`
-- `GLM`
-- `irrKlang`
-
-Also, I created a "utilities" library for this project. It is included in the `misc/` folder, and is
-required for proper functionality.
+```
+Required:
+- GLFW                    version 3.3
+- GLAD                    version 4.6 Core
+- stb_image               version 2.23
+- GLM                     version 0.9.9
+- irrKlang                version 1.6
+- ASWL Utilities          version 0.1
+```
+The `ASWL Utilities` library is a self-made general utility library. 
+It is included in the `misc/` folder, and is required for proper functionality.
+You must download and build the remaining dependencies, as they are not included in this repository.
 
 ## "Features"
 I put quotes around because these aren't really features. Not technically, anyways. It's just a list of what 
@@ -60,6 +67,10 @@ In (hopefully) the next major update:
 - Window resizing capability (I was too lazy to add it)
 - Scroll wheel support
 - Font/text rendering
+- Active camera
+- Render layers
+- Math elements (rotation, dot, project, etc.)
+- Physics elements (Separating Axis Theorem collision, rigidbody)
 
 In the near future:
 

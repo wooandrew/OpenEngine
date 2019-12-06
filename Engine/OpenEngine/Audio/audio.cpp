@@ -43,7 +43,7 @@
 #include <map>
 
 #include <irrKlang/src/irrKlang.h>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 namespace OpenEngine {
 
@@ -56,7 +56,7 @@ namespace OpenEngine {
 
 	static AudioStorage* storage;
 
-	void Audio::init(const std::string background, const float volume) {
+	void Audio::init(const std::string& background, const float volume) {
 
 		storage = new AudioStorage();
 
@@ -71,7 +71,7 @@ namespace OpenEngine {
 		delete storage;
 	}
 
-	void Audio::AddFile(std::string name, std::string path) {
+	void Audio::AddFile(const std::string& name, const std::string& path) {
 
 		auto search = storage->AudioMap.find(name);
 
@@ -83,8 +83,17 @@ namespace OpenEngine {
 		else
 			utilities::Logger<std::string, std::string>("A0001", "Error: Audio file [", path, "] has already been added.");
 	}
+	void Audio::RemoveFile(const std::string& name) {
 
-	void Audio::PlayAudio(const std::string name, const float volume) {
+		auto search = storage->AudioMap.find(name);
+
+		if (search == storage->AudioMap.end())
+			storage->AudioMap.erase(name);
+		else
+			utilities::Logger<std::string, std::string>("A0002", "Error: Audio file [", name, "] cannot be found.");
+	}
+
+	void Audio::PlayAudio(const std::string& name, const float volume) {
 
 		auto search = storage->AudioMap.find(name);
 
@@ -93,9 +102,11 @@ namespace OpenEngine {
 			search->second->setDefaultVolume(volume);
 			storage->AudioEngine->play2D(search->second);
 		}
+		else
+			utilities::Logger<std::string, std::string>("A0003", "Error: Audio file [", name, "] cannot be found.");
 	}
 
-	void Audio::SetBackground(const std::string sound, const float volume) {
+	void Audio::SetBackground(const std::string& sound, const float volume) {
 
 		if (storage->background != nullptr)
 			storage->background->drop();

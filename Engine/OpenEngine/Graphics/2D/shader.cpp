@@ -46,7 +46,7 @@
 
 #include <GLAD/glad.h>
 #include <GLM/gtc/type_ptr.hpp>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 namespace OpenEngine {
 
@@ -118,7 +118,7 @@ namespace OpenEngine {
 
 		// --- Compile
 		std::string vertexSrc = R"(
-		#version 330 core
+		#version 460 core
 
 		layout(location = 0) in vec3 a_Position;
 		layout(location = 1) in vec2 a_TexCoord;
@@ -128,15 +128,14 @@ namespace OpenEngine {
 
 		out vec2 v_TexCoord;
 
-		void main()
-		{
+		void main() {
 			v_TexCoord = a_TexCoord;
 			gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 		}
 	)";
 
 		std::string fragmentSrc = R"(
-			#version 330 core
+			#version 460 core
 
 			layout(location = 0) out vec4 color;
 
@@ -145,9 +144,10 @@ namespace OpenEngine {
 			uniform vec4 u_Color;
 			uniform sampler2D u_Texture;
 
-			void main()
-			{
+			void main() {
 				color = texture(u_Texture, v_TexCoord * 1.0) * u_Color;
+				if(color.a < 0.1)
+					discard;
 			}
 		)";
 
@@ -315,7 +315,6 @@ namespace OpenEngine {
 	Shader ShaderLibrary::Load(const std::string& shaderPath) {
 
 		Shader shader(shaderPath);
-
 		Add(shader);
 
 		return shader;
@@ -324,8 +323,8 @@ namespace OpenEngine {
 	Shader ShaderLibrary::Load(const std::string& name, const std::string& shaderPath) {
 
 		Shader shader(shaderPath);
-
 		Add(name, shader);
+
 		return shader;
 	}
 

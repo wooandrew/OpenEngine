@@ -49,7 +49,7 @@
 
 #include <GLAD/glad.h>
 #include <GLFW/src/glfw3.h>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 namespace OpenEngine {
 

@@ -41,7 +41,7 @@
 #include "vertexarray.hpp"
 
 #include <GLAD/glad.h>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 namespace OpenEngine {
 

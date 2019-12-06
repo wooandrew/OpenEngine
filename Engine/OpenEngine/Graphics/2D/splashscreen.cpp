@@ -42,11 +42,22 @@
 
 namespace OpenEngine {
 
-	SplashScreen::SplashScreen(const std::string texturePath, const float fadetime, const glm::vec3 scale) : Texture(texturePath) {
-		FadeTime = fadetime;
+    SplashScreen::SplashScreen(const std::string& TexturePath, const float fadetime, const glm::vec3& scale) {
+		
+        texture = std::make_shared<Texture>(TexturePath);
+        
+        FadeTime = fadetime;
 		this->scale = scale;
 	}
 
+    SplashScreen::SplashScreen(const std::string& TexturePath, const float fadetime, const float scale) {
+
+        texture = std::make_shared<Texture>(TexturePath);
+        
+        FadeTime = fadetime;
+        this->scale = { scale, scale, 0.f };
+    }
+ 
 	const float SplashScreen::GetFadeTime() const {
 		return FadeTime;
 	}
@@ -54,10 +65,14 @@ namespace OpenEngine {
 		FadeTime = fadetime;
 	}
 
-	const glm::vec3 SplashScreen::GetScale() const {
+	const glm::vec3& SplashScreen::GetScale() const {
 		return scale;
 	}
-	void SplashScreen::SetScale(glm::vec3 scale) {
+	void SplashScreen::SetScale(const glm::vec3& scale) {
 		this->scale = scale;
 	}
+
+    const std::shared_ptr<Texture>& SplashScreen::GetTexture() const {
+        return texture;
+    }
 }

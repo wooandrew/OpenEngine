@@ -42,7 +42,7 @@
 
 namespace OpenEngine {
 
-	void Graphics::init(const glm::vec4 color) {
+	void Graphics::init(const glm::vec4& color) {
 
 		glad_glEnable(GL_BLEND);
 		glad_glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -51,12 +51,15 @@ namespace OpenEngine {
 
 		SetClearColor(color);
 	}
+    void Graphics::shutdown() {
+
+    }
 
 	void Graphics::SetViewPort(int x, int y, int width, int height) {
 		glad_glViewport(x, y, width, height);
 	}
 
-	void Graphics::SetClearColor(const glm::vec4 color) {
+	void Graphics::SetClearColor(const glm::vec4& color) {
 		glad_glClearColor(color.r, color.g, color.b, color.a);
 	}
 

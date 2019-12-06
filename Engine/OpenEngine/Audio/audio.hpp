@@ -53,14 +53,15 @@ namespace OpenEngine {
 
 		Audio() = delete;
 
-		static void init(const std::string background = "", const float volume = 1.f);
+		static void init(const std::string& background = "", const float volume = 1.f);
 		static void shutdown();
 
-		static void AddFile(std::string name, std::string path);
+		static void AddFile(const std::string& name, const std::string& path);
+        static void RemoveFile(const std::string& name);
 
-		static void PlayAudio(const std::string name, const float volume = 1.f);
+		static void PlayAudio(const std::string& name, const float volume = 1.f);
 
-		static void SetBackground(const std::string sound, const float volume = 1.f);
+		static void SetBackground(const std::string& sound, const float volume = 1.f);
 		static void PlayBackground(const float volume = 1.f);
 		static void PauseBackground();
 		static void StopBackground();

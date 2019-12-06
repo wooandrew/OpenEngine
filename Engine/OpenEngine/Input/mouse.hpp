@@ -44,7 +44,7 @@
 #define OPEN_ENGINE_INPUT_MOUSE_CHPP
 
 #include <GLFW/src/glfw3.h>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 namespace OpenEngine {
 
@@ -54,13 +54,15 @@ namespace OpenEngine {
 
 	public:
 
-		static void init(utilities::Dimensions2D<int> windowDimensions);
+		static void init(std::pair<int, int> _origin = std::make_pair(500, 309));
 
 		static void MousePositionCallback(GLFWwindow* window, double _x, double _y);
 		static void MouseButtonCallback(GLFWwindow* window, int button, int action, int modifiers);
 
 		static double GetMouseX();
 		static double GetMouseY();
+
+        static void SetOrigin(std::pair<int, int> _origin);
 
 		static bool ButtonDown(int button);
 		static bool ButtonUp(int button);
@@ -75,7 +77,7 @@ namespace OpenEngine {
 		static bool ButtonsDown[];
 		static bool ButtonsUp[];	
 
-		static utilities::Dimensions2D<int> WindowDimensions;
+        static std::pair<int, int> origin;
 	};
 }
 

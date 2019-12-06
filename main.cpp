@@ -59,7 +59,7 @@
 #include <OpenEngine/Graphics/2D/sprite.hpp>
 #include <OpenEngine/Graphics/2D/texture.hpp>
 
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 #define DEBUG
 
@@ -141,7 +141,7 @@ int main() {
 	OpenEngine::Audio::init();
 	OpenEngine::Graphics::init();
 	OpenEngine::Render2D::init();
-	OpenEngine::Mouse::init(OpenEngine::Engine::WindowDimensions);
+	OpenEngine::Mouse::init();
 
 	// Initialize Primary Camera
 	OpenEngine::OrthoCam PrimaryOrthoCam(static_cast<float>(-OpenEngine::Engine::WindowDimensions.width / 2.f), static_cast<float>(OpenEngine::Engine::WindowDimensions.width / 2.f), 
@@ -156,9 +156,9 @@ int main() {
 
 	bool run = true;
 
-	auto splashLogo1 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Pictures\logo1819.png)", 10.f, { 0.75f, 0.75f, 0.f });
-	auto splashLogo2 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\Logo\oelogo.png)", 10.f, { 0.75f, 0.75f, 0.f });
-	auto splashLogo3 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\demo\splash.png)", 10.f);
+	auto splashLogo1 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Pictures\logo1819.png)", 10.f, 0.75f);
+	auto splashLogo2 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\Logo\oelogo.png)", 10.f, 0.75f);
+	auto splashLogo3 = OpenEngine::SplashScreen(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\Splash\splash.png)", 10.f);
 	auto splash_logo1819 = std::make_shared<OpenEngine::SplashScreen>(splashLogo1);
 	auto splash_logoh19 = std::make_shared<OpenEngine::SplashScreen>(splashLogo2);
 	auto splash_logo = std::make_shared<OpenEngine::SplashScreen>(splashLogo3);
@@ -177,7 +177,7 @@ int main() {
 	OpenEngine::Render2D::EndScene();
 	OpenEngine::Graphics::EndRender(engine.GetWindow());
 
-	PrimaryOrthoCam.Lock({ OpenEngine::MovementMacros::UP, OpenEngine::MovementMacros::DOWN }, { true, true });
+	PrimaryOrthoCam.Lock(true);
 	
 	float zoom = 1.f;
 
@@ -194,7 +194,7 @@ int main() {
 			PrimaryOrthoCam.SetZoom(zoom, OpenEngine::Engine::WindowDimensions);
 		}
 
-		int counter = 0;
+		static int counter = 0;
 
 		if (button.IsPressed())
 			std::cout << "Wowzers! " << counter++ << std::endl;
@@ -225,6 +225,7 @@ int main() {
 		// *** RENDER LOGIC *** //
 	}
 
+	OpenEngine::Graphics::shutdown();
 	OpenEngine::Render2D::shutdown();
 	OpenEngine::Audio::shutdown();
 

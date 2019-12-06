@@ -50,17 +50,21 @@
 
 namespace OpenEngine {
 
-	class Sprite : public Texture {
+	class Sprite {
 
-		/// OpenEngine -> Sprite class, inherits from Texture \\\
+		/// OpenEngine -> Sprite Class \\\
 
 	public:
 
 		Sprite() = default;
+		Sprite(const unsigned int width, const unsigned int height, const glm::vec2& position = glm::vec2(), const float scale = 0, float speed = 0, float rotation = 0);
 		Sprite(const unsigned int width, const unsigned int height, const glm::vec2& position = glm::vec2(), const glm::vec2& scale = glm::vec2(), float speed = 0, float rotation = 0);
+		Sprite(const unsigned int width, const unsigned int height, const glm::vec3& position = glm::vec3(), const float scale = 0, float speed = 0, float rotation = 0);
 		Sprite(const unsigned int width, const unsigned int height, const glm::vec3& position = glm::vec3(), const glm::vec3& scale = glm::vec3(), float speed = 0, float rotation = 0);
-		Sprite(const std::string texturePath, const glm::vec2& position = glm::vec2(), const glm::vec2& scale = glm::vec2(), float speed = 0, float rotation = 0);
-		Sprite(const std::string texturePath, const glm::vec3& position = glm::vec3(), const glm::vec3& scale = glm::vec3(), float speed = 0, float rotation = 0);
+		Sprite(const std::string& TexturePath, const glm::vec2& position = glm::vec2(), const float scale = 0, float speed = 0, float rotation = 0);
+		Sprite(const std::string& TexturePath, const glm::vec2& position = glm::vec2(), const glm::vec2& scale = glm::vec2(), float speed = 0, float rotation = 0);
+		Sprite(const std::string& TexturePath, const glm::vec3& position = glm::vec3(), const float scale = 0, float speed = 0, float rotation = 0);
+		Sprite(const std::string& TexturePath, const glm::vec3& position = glm::vec3(), const glm::vec3& scale = glm::vec3(), float speed = 0, float rotation = 0);
 
 		virtual void Update(float dt);
 
@@ -82,7 +86,11 @@ namespace OpenEngine {
 		const glm::vec3& GetScale() const;
 		const glm::vec3& GetPosition() const;
 
-	private:
+		const std::shared_ptr<Texture>& GetTexture() const;
+
+	protected:
+
+		std::shared_ptr<Texture> texture;
 
 		bool lock;
 

@@ -45,37 +45,26 @@
 
 namespace OpenEngine {
 
-	Sprite::Sprite(const unsigned int width, const unsigned int height, const glm::vec2& position, const glm::vec2& scale, float speed, float rotation) : Texture(width, height) {
+	Sprite::Sprite(const unsigned int width, const unsigned int height, const glm::vec2& position, const float scale, float speed, float rotation) {
+		
+		texture = std::make_shared<Texture>(width, height);
+
+		lock = false;
+
+		LockUp = false;
+		LockDown = false;
+		LockLeft = false;
+		LockRight = false;
+
+		this->speed = speed;
+		this->rotation = rotation;
+
+		this->position = { position.x, position.y, 0.0f };
+		this->scale = glm::vec3(scale);
+	}
+	Sprite::Sprite(const unsigned int width, const unsigned int height, const glm::vec2& position, const glm::vec2& scale, float speed, float rotation) {
 	
-		lock = false;
-
-		LockUp = false;
-		LockDown = false;
-		LockLeft = false;
-		LockRight = false;
-
-		this->speed = speed;
-		this->rotation = rotation;
-
-		this->position = { position.x, position.y, 0.0f };
-		this->scale = { scale.x, scale.y, 1.0f };
-	}
-	Sprite::Sprite(const unsigned int width, const unsigned int height, const glm::vec3& position, const glm::vec3& scale, float speed, float rotation) : Texture(width, height) {
-
-		lock = false;
-
-		LockUp = false;
-		LockDown = false;
-		LockLeft = false;
-		LockRight = false;
-
-		this->speed = speed;
-		this->rotation = rotation;
-
-		this->position = { position.x, position.y, position.z };
-		this->scale = { scale.x, scale.y, scale.z };
-	}
-	Sprite::Sprite(const std::string texturePath, const glm::vec2& position, const glm::vec2& scale, float speed, float rotation) : Texture(texturePath) {
+		texture = std::make_shared<Texture>(width, height);
 
 		lock = false;
 
@@ -90,7 +79,26 @@ namespace OpenEngine {
 		this->position = { position.x, position.y, 0.0f };
 		this->scale = { scale.x, scale.y, 1.0f };
 	}
-	Sprite::Sprite(const std::string texturePath, const glm::vec3& position, const glm::vec3& scale, float speed, float rotation) : Texture(texturePath) {
+	Sprite::Sprite(const unsigned int width, const unsigned int height, const glm::vec3& position, const float scale, float speed, float rotation) {
+
+		texture = std::make_shared<Texture>(width, height);
+
+		lock = false;
+
+		LockUp = false;
+		LockDown = false;
+		LockLeft = false;
+		LockRight = false;
+
+		this->speed = speed;
+		this->rotation = rotation;
+
+		this->position = { position.x, position.y, 0.0f };
+		this->scale = glm::vec3(scale);
+	}
+	Sprite::Sprite(const unsigned int width, const unsigned int height, const glm::vec3& position, const glm::vec3& scale, float speed, float rotation) {
+
+		texture = std::make_shared<Texture>(width, height);
 
 		lock = false;
 
@@ -104,28 +112,102 @@ namespace OpenEngine {
 
 		this->position = { position.x, position.y, position.z };
 		this->scale = { scale.x, scale.y, scale.z };
+	}
+	Sprite::Sprite(const std::string& TexturePath, const glm::vec2& position, const float scale, float speed, float rotation) {
+		
+		texture = std::make_shared<Texture>(TexturePath);
+
+		lock = false;
+
+		LockUp = false;
+		LockDown = false;
+		LockLeft = false;
+		LockRight = false;
+
+		this->speed = speed;
+		this->rotation = rotation;
+
+		this->position = { position.x, position.y, 0.0f };
+		this->scale = glm::vec3(scale);
+	}
+	Sprite::Sprite(const std::string& TexturePath, const glm::vec2& position, const glm::vec2& scale, float speed, float rotation) {
+
+		texture = std::make_shared<Texture>(TexturePath);
+
+		lock = false;
+
+		LockUp = false;
+		LockDown = false;
+		LockLeft = false;
+		LockRight = false;
+
+		this->speed = speed;
+		this->rotation = rotation;
+
+		this->position = { position.x, position.y, 0.0f };
+		this->scale = { scale.x, scale.y, 1.0f };
+	}
+	Sprite::Sprite(const std::string& TexturePath, const glm::vec3& position, const float scale, float speed, float rotation) {
+
+		texture = std::make_shared<Texture>(TexturePath);
+
+		lock = false;
+
+		LockUp = false;
+		LockDown = false;
+		LockLeft = false;
+		LockRight = false;
+
+		this->speed = speed;
+		this->rotation = rotation;
+
+		this->position = position;
+		this->scale = glm::vec3(scale);
+	}
+	Sprite::Sprite(const std::string& TexturePath, const glm::vec3& position, const glm::vec3& scale, float speed, float rotation) {
+
+		texture = std::make_shared<Texture>(TexturePath);
+
+		lock = false;
+
+		LockUp = false;
+		LockDown = false;
+		LockLeft = false;
+		LockRight = false;
+
+		this->speed = speed;
+		this->rotation = rotation;
+
+		this->position = position;
+		this->scale = scale;
 	}
 
 	void Sprite::Update(float dt) {
 
 		if (!lock) {
 
-			if (Keyboard::KeyIsPressed(KeyMap::KM_Up) && !LockUp) {
-				//position.x += -sin(glm::radians(rotation)) * speed * dt;
-				position.y += /*cos(glm::radians(rotation)) */ speed * dt;
-			}
-			else if (Keyboard::KeyIsPressed(KeyMap::KM_Down) && !LockDown) {
-				//position.x -= -sin(glm::radians(rotation)) * speed * dt;
-				position.y -= /*cos(glm::radians(rotation)) */ speed * dt;
+			if (!(Keyboard::KeyIsPressed(KeyMap::KM_Up) && Keyboard::KeyIsPressed(KeyMap::KM_Down))) {
+
+				if (Keyboard::KeyIsPressed(KeyMap::KM_Up) && !LockUp) {
+					//position.x += -sin(glm::radians(rotation)) * speed * dt;
+					position.y += /*cos(glm::radians(rotation)) */ speed * dt;
+				}
+				else if (Keyboard::KeyIsPressed(KeyMap::KM_Down) && !LockDown) {
+					//position.x -= -sin(glm::radians(rotation)) * speed * dt;
+					position.y -= /*cos(glm::radians(rotation)) */ speed * dt;
+				}
 			}
 
-			if (Keyboard::KeyIsPressed(KeyMap::KM_Left) && !LockLeft) {
-				position.x -= /*cos(glm::radians(rotation)) */ speed * dt;
-				//position.y -= sin(glm::radians(rotation)) * speed * dt;
-			}
-			else if (Keyboard::KeyIsPressed(KeyMap::KM_Right) && !LockRight) {
-				position.x += /*cos(glm::radians(rotation)) */ speed * dt;
-				//position.y += sin(glm::radians(rotation)) * speed * dt;
+			if (!(Keyboard::KeyIsPressed(KeyMap::KM_Left) && Keyboard::KeyIsPressed(KeyMap::KM_Right))) {
+			
+				if (Keyboard::KeyIsPressed(KeyMap::KM_Left) && !LockLeft) {
+					position.x -= /*cos(glm::radians(rotation)) */ speed * dt;
+					//position.y -= sin(glm::radians(rotation)) * speed * dt;
+				}
+				else if (Keyboard::KeyIsPressed(KeyMap::KM_Right) && !LockRight) {
+					position.x += /*cos(glm::radians(rotation)) */ speed * dt;
+					//position.y += sin(glm::radians(rotation)) * speed * dt;
+				}
 			}
 
 			if (Keyboard::KeyIsPressed(KeyMap::rLeft)) {
@@ -171,7 +253,7 @@ namespace OpenEngine {
 	}
 
 	void Sprite::SetPosition(const float position) {
-		SetPosition({ 1.f, 1.f, 1.f });
+		SetPosition({ position, position, position });
 	}
 	void Sprite::SetPosition(const glm::vec2& position) {
 		SetPosition({ position.x, position.y, 0.f });
@@ -198,5 +280,9 @@ namespace OpenEngine {
 	}
 	const glm::vec3& Sprite::GetPosition() const {
 		return position;
+	}
+
+	const std::shared_ptr<Texture>& Sprite::GetTexture() const {
+		return texture;
 	}
 }

@@ -47,7 +47,7 @@
 #include <vector>
 
 #include <GLM/glm.hpp>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 #include <OpenEngine/Input/keymap.hpp>
 
@@ -65,11 +65,12 @@ namespace OpenEngine {
 		void Lock(bool lock = false);
 		void Lock(std::vector<MovementMacros> directions, std::vector<bool> lock);
 
+		const float GetSpeed() const;
 		void SetSpeed(float speed);
 
 		void SetProjection(float left, float right, float bottom, float top);
 
-		void SetZoom(float zoom, utilities::Dimensions2D<int> windowSize);
+		void SetZoom(float zoom, const utilities::Dimensions2D<int>& WindowSize);
 
 		float GetRotation() const;
 		void SetRotation(float rotation);

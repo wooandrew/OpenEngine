@@ -1,0 +1,31 @@
+OpenEngine Changelog
+
+Update Types:
+ !      Feature Update          -> New Features                 (major) -> New functions
+ >      Quality of Life         -> Ease of Use                  (minor) -> Changed functions
+ *      Function Upgrade        -> Feature Functionality        (minor) -> New functions, or major function update
+ %      Deprecation             -> Function Deprecation         (minor) -> Removed function, or marked function as deprecated
+ /      Bug Fix                 -> Bug Patch                    (patch)
+ .      Detail Update                                           (patch) -> Change in filename, foldername, class name, function name
+
+
+(0 15 2) December 6, 2019 - Quality of Life, Function Upgrade, Deprecation, Bug Fix, Detail Update
+
+. Changed ASWU to ASWL (Andrew S. Woo Libraries)                      -> Renamed Utilities Library container to a more appropriate name.
+> Added float-type scale constructor for Splash Screens               -> Simple Quality of Life addition.
+> Changed Sprite private members to protected members                 -> This allows for inheritance of member variables such as scale and position.
+> Added float-type scale constructor for Sprites                      -> Simple Quality of Life addition.
+* Render texture with alpha                                           -> OpenEngine rendering now properly renders Alpha values.
+/ Fixed alpha blending                                                -> Default shader did not discard alpha values, rendering transparent pixels as white.
+* Made Textures reusable                                              -> Textures can now be reused by multiple objects (unless destroyed).
+* Added GetSpeed for OrthoCam                                         -> Allows users to get the speed of a camera.
+% Removed texture options from DrawQuad                               -> These were unnecessary functions, as the RenderTexture functions did the exact same thing.
+* Add RemoveFile function in audio                                    -> Audio files can now be removed. This function is UNTESTED.
+> In image loader, specify which image could not be loaded            -> Simple Quality of Life change.
+> Changed default Sprite movement behavior                            -> If opposing movement keys are pressed at the same time, sprite will not move.
+* Added origin to Mouse Callback class                                -> Cursor origin can now be set, instead of default being bottom left corner
+* Changed SplashScreen structure                                      -> Splash Screen no longer inherits from Texture Class, but instead has a texture member
+> Made SplashScreen fadetime a requirement, no default value          -> The fade time of Splash screens must now be explicitly defined, instead of leaving a default value
+> Changed TextureDimensions type from unsigned int to int             -> No need for explicit casting to int for implicit negation.
+* Added Graphics shutdown function                                    -> For future use. Currently used for semantic purposes only.
+and various code optimizations!

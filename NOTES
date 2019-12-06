@@ -3,12 +3,12 @@ OpenEngine Development Notes
 
 
 Project Dependencies
--> ASWUtilities
--> GLFW
--> GLAD
--> stb_image
--> GLM
--> irrKlang
+-> ASWL Utilities           v1
+-> GLFW                     v3.3
+-> GLAD                     v4.6 Core
+-> stb_image                v2.23
+-> GLM                      v0.9.9
+-> irrKlang                 v1.6
 
 
 Skill requirement

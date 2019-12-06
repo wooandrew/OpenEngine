@@ -75,7 +75,7 @@ namespace OpenEngine {
 		int yMax = position.y + (TextureDimensions.height * scale.y) / 2;
 		int yMin = position.y - (TextureDimensions.height * scale.y) / 2;
 
-		if ((mouseX < xMax) && (mouseX > xMin) && (mouseY < yMax) && (mouseY > yMin))
+		if ((mouseX <= xMax) && (mouseX >= xMin) && (mouseY <= yMax) && (mouseY >= yMin))
 			return Mouse::ButtonIsPressed(KeyMap::KM_MouseLeft);
 
 		return false;

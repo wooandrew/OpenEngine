@@ -46,7 +46,7 @@
 #include <string>
 
 #include <GLAD/glad.h>
-#include <ASWU/utilities.hpp>
+#include <ASWL/utilities.hpp>
 
 namespace OpenEngine {
 
@@ -57,11 +57,11 @@ namespace OpenEngine {
 	public:
 
 		Texture() = default;
-		Texture(const unsigned int width, const unsigned int height);
-		Texture(const std::string texturePath);
+		Texture(const int width, const int height);
+		Texture(const std::string& TexturePath);
 		~Texture();
 
-		const utilities::Dimensions2D<unsigned int>& GetDimensions() const;
+		const utilities::Dimensions2D<int>& GetDimensions() const;
 
 		void SetData(void* data, unsigned int size);
 		void Bind(unsigned int slot = 0) const;
@@ -69,7 +69,7 @@ namespace OpenEngine {
 	protected:
 
 		std::string TexturePath;
-		utilities::Dimensions2D<unsigned int> TextureDimensions;
+		utilities::Dimensions2D<int> TextureDimensions;
 
 	private:
 

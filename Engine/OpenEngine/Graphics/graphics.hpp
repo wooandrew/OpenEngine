@@ -59,9 +59,11 @@ namespace OpenEngine {
 
 		Graphics() = delete;
 
-		static void init(const glm::vec4 color = glm::vec4(0));
+		static void init(const glm::vec4& color = glm::vec4(0));
+        static void shutdown();
+
 		static void SetViewPort(int x, int y, int width, int height);
-		static void SetClearColor(const glm::vec4 color);
+		static void SetClearColor(const glm::vec4& color);
 		static void Clear();
 
 		static void BeginRender();

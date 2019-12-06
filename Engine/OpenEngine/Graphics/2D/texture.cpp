@@ -46,7 +46,7 @@
 
 namespace OpenEngine {
 
-	Texture::Texture(const unsigned int width, const unsigned int height) : TextureDimensions(utilities::make_2d_dimension<unsigned int>(width, height)) {
+	Texture::Texture(const int width, const int height) : TextureDimensions(utilities::make_2d_dimension<int>(width, height)) {
 
 		InternalFormat = GL_RGBA8;
 		DataFormat = GL_RGBA;
@@ -61,9 +61,9 @@ namespace OpenEngine {
 		glad_glTextureParameteri(RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
 
-	Texture::Texture(const std::string texturePath) : TexturePath(texturePath) {
+	Texture::Texture(const std::string& TexturePath) : TexturePath(TexturePath) {
 
-		TextureDimensions = utilities::make_2d_dimension<unsigned int>(0, 0);
+		TextureDimensions = utilities::make_2d_dimension<int>(0, 0);
 
 		RendererID = 0;
 
@@ -75,11 +75,11 @@ namespace OpenEngine {
 		int channels;
 
 		stbi_set_flip_vertically_on_load(true);
-		stbi_uc* data = stbi_load(texturePath.c_str(), &width, &height, &channels, 0);
+		stbi_uc* data = stbi_load(TexturePath.c_str(), &width, &height, &channels, 0);
 
 		if (data) {
 
-			TextureDimensions = utilities::make_2d_dimension<unsigned int>(width, height);
+			TextureDimensions = utilities::make_2d_dimension<int>(width, height);
 
 			GLenum internalFormat = 0;
 			GLenum dataFormat = 0;
@@ -93,7 +93,7 @@ namespace OpenEngine {
 				dataFormat = GL_RGB;
 			}
 			else
-				utilities::Logger("T0001", "Error: Bad channel # -> [ERR].");
+				utilities::Logger<std::string, std::string>("T0001", "Error: Bad channel #", std::to_string(channels));
 
 			InternalFormat = internalFormat;
 			DataFormat = dataFormat;
@@ -104,13 +104,13 @@ namespace OpenEngine {
 			glad_glTextureParameteri(RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glad_glTextureParameteri(RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-			glad_glTextureParameteri(RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glad_glTextureParameteri(RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glad_glTextureParameteri(RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 			glad_glTextureSubImage2D(RendererID, 0, 0, 0, TextureDimensions.width, TextureDimensions.height, dataFormat, GL_UNSIGNED_BYTE, data);
 		}
 		else
-			utilities::Logger("I0002", "Error: Failed to load image -> !stbi_load().");
+			utilities::Logger<std::string, std::string>("I0002", "Error: Failed to load image -> !stbi_load() [", TexturePath, "].");
 
 		stbi_image_free(data);
 	}
@@ -119,7 +119,7 @@ namespace OpenEngine {
 		glad_glDeleteTextures(1, &RendererID);
 	}
 
-	const utilities::Dimensions2D<unsigned int>& Texture::GetDimensions() const {
+	const utilities::Dimensions2D<int>& Texture::GetDimensions() const {
 		return TextureDimensions;
 	}
 
@@ -127,10 +127,9 @@ namespace OpenEngine {
 
 		unsigned int bpp = (DataFormat == GL_RGBA) ? 4 : 3;
 
-		if (size != TextureDimensions.width * TextureDimensions.height * bpp) {
+		if (size != TextureDimensions.width * TextureDimensions.height * bpp)
 			utilities::Logger("T0003", "ERROR: LOG VALUE -> T0003");
-			//return;
-		}
+
 		glad_glTextureSubImage2D(RendererID, 0, 0, 0, TextureDimensions.width, TextureDimensions.height, DataFormat, GL_UNSIGNED_BYTE, data);
 	}
 

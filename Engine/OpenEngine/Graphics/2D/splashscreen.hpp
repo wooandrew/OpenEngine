@@ -53,22 +53,26 @@
 
 namespace OpenEngine {
 
-	class SplashScreen : public Texture {
+	class SplashScreen {
 		
-		/// OpenEngine -> Splashscreen class, inherits from Texture \\\
+		/// OpenEngine -> Splashscreen Class \\\
 
 	public:
 
-		SplashScreen() = default;
-		SplashScreen(const std::string texturePath, const float fadetime = 10, const glm::vec3 scale = glm::vec3(1.f));
+		SplashScreen(const std::string& TexturePath, const float fadetime, const glm::vec3& scale = glm::vec3(1.f));
+        SplashScreen(const std::string& TexturePath, const float fadetime, const float scale);
 
 		const float GetFadeTime() const;
 		void SetFadeTime(float fadetime);
 
-		const glm::vec3 GetScale() const;
-		void SetScale(glm::vec3 scale);
+		const glm::vec3& GetScale() const;
+		void SetScale(const glm::vec3& scale);
+
+        const std::shared_ptr<Texture>& GetTexture() const;
 
 	private:
+
+        std::shared_ptr<Texture> texture;
 
 		float FadeTime;
 		glm::vec3 scale;

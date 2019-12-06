@@ -12,8 +12,8 @@ include_directories(engine ${CMAKE_CURRENT_SOURCE_DIR}/Engine)
 
 add_library(
 	UtilitiesLib STATIC
-	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWU/utilities.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWU/utilities.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWL/utilities.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWL/utilities.cpp
 )
 
 add_library(
