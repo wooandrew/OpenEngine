@@ -22,9 +22,9 @@ simple game.
 > project should work on other operating systems (macOS, Linux) but\
 > has not been tested on such systems.
 
-`Version 0.1.0`\
+`Version 0.2.0`\
 `Does OpenEngine Use Semantic Versioning? Not currently.`
-
+`Please check the changelog for more details`
 
 ## Dependencies
 OpenEngine uses several dependencies. Here is a list:
@@ -41,49 +41,6 @@ The `ASWL Utilities` library is a self-made general utility library.
 It is included in the `misc/` folder, and is required for proper functionality.
 You must download and build the remaining dependencies, as they are not included in this repository.
 
-## "Features"
-I put quotes around because these aren't really features. Not technically, anyways. It's just a list of what 
-you can do.
-
-- Basic quad rendering
-- Texture loading
-- GLSL shader parser (broken as of 11/16/19, replaced with hardcoded shader, and pending fix)
-- Overloadable sprite class (by which I mean I provided a very basic update function that should really be 
-    changed individually)
-- Keyboard input
-- Keymap (kinda)
-- Mouse input (no scroll wheel as of 11/16/19)
-- Audio playback (hoorah irrKlang)
-- Easy splash screens (I'm really proud of this one)
-- Basic orthographic camera (should work for most 2D games)
-- A very, very rudimentary button class
-
-#### Stuff I plan to add
-
-In (hopefully) the next major update:
-
-- Spritesheet rendering
-- "Animatable" splash screens
-- Window resizing capability (I was too lazy to add it)
-- Scroll wheel support
-- Font/text rendering
-- Active camera
-- Render layers
-- Math elements (rotation, dot, project, etc.)
-- Physics elements (Separating Axis Theorem collision, rigidbody)
-
-In the near future:
-
-- Joystick support
-- UI Elements (text box, menus, etc.)
-- Other stuff probably
-
-In the very, very distant future:
-
-- 3D space support
-- 3D animation support
-- 3D mesh loading
-- Alot of other 3D stuff I'm sure
 
 ## Credits
 

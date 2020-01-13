@@ -2,8 +2,16 @@ OpenEngine Development Notes
 -> Readability is King <-
 
 
+INCLUDE STRUCTURE
+-> declaration header
+
+-> C++ Standard Library Headers
+-> Include Libraries (glm, glfw, etc.)
+
+-> Related Libraries (OpenEngine/)
+
 Project Dependencies
--> ASWL Utilities           v1
+-> ASWL Utilities           v0.1
 -> GLFW                     v3.3
 -> GLAD                     v4.6 Core
 -> stb_image                v2.23

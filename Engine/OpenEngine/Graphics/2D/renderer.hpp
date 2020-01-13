@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -45,15 +45,14 @@
 
 #include <vector>
 
-//#include <GLFW/src/glfw3.h>
 #include <GLM/glm.hpp>
 
 #include <OpenEngine/UI/button.hpp>
-
 #include <OpenEngine/Graphics/2D/orthocam.hpp>
 #include <OpenEngine/Graphics/2D/shader.hpp>
 #include <OpenEngine/Graphics/2D/splashscreen.hpp>
 #include <OpenEngine/Graphics/2D/sprite.hpp>
+#include <OpenEngine/Graphics/2D/spritesheet.hpp>
 #include <OpenEngine/Graphics/2D/texture.hpp>
 #include <OpenEngine/Graphics/2D/vertexarray.hpp>
 
@@ -79,8 +78,9 @@ namespace OpenEngine {
 		static void Fade(GLFWwindow* window, const glm::vec3& position, const glm::vec2& scale, const std::shared_ptr<Texture>& texture, float fadetime = 10);
 
 		static void RenderSprite(const std::shared_ptr<Sprite>& sprite);
+        static void RenderSpriteSheet(const std::shared_ptr<SpriteSheet>& spritesheet);
 
-		static void RenderButton(const std::shared_ptr<Button>& button);
+		static void RenderButton(const std::shared_ptr<UI::Button>& button);
 
 		static void RenderTexture(const glm::vec2& position, const std::shared_ptr<Texture>& texture);
 		static void RenderTexture(const glm::vec3& position, const std::shared_ptr<Texture>& texture);

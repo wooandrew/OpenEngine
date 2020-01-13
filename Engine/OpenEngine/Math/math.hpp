@@ -40,31 +40,59 @@
 
 #pragma once
 
-#ifndef OPEN_ENGINE_INPUT_KEYBOARD_CHPP
-#define OPEN_ENGINE_INPUT_KEYBOARD_CHPP
+#ifndef OPEN_ENGINE_MATH_MATH_CHPP
+#define OPEN_ENGINE_MATH_MATH_CHPP
 
-#include <GLFW/src/glfw3.h>
+#include <vector>
+
+#include <GLM/glm.hpp>
+#include <GLM/gtc/constants.hpp>
 
 namespace OpenEngine {
 
-	class Keyboard {
+    namespace Math { // OpenEngine -> Math Namespace
 
-		/// OpenEngine -> Basic static keyboard key callback class \\\
+        template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type * = nullptr> T ConvertToRadians(const T degrees) {
+            return (degrees * glm::pi<T>()) / static_cast<T>(180.f);
+        }
+        template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type * = nullptr> T ConvertToDegrees(const T radians) {
+            return (radians * static_cast<T>(180.f)) / glm::pi<T>();
+        }
 
-	public:
+        enum class AngleType {
+            radian,
+            degree
+        };
 
-		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
+        const glm::vec3& RotatePoint(glm::vec3& rotatepoint, const glm::vec3& pivotpoint, float rotation, AngleType type);
 
-		static bool KeyDown(int key);
-		static bool KeyUp(int key);
-		static bool KeyIsPressed(int key);
+        const float dot(const glm::vec3& left, const glm::vec3& right);
+        const glm::vec3& project(const glm::vec3& left, const glm::vec3& right);
 
-	private:
+        template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type * = nullptr> const T Max(const std::vector<T>& vec) {
 
-		static bool Keys[];
-		static bool KeysDown[];
-		static bool KeysUp[];
-	};
+            T ret = vec[0];
+
+            for (const auto val : vec) {
+                if (val > ret)
+                    ret = val;
+            }
+
+            return ret;
+        }
+        template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type * = nullptr> const T Min(const std::vector<T>& vec) {
+
+            T ret = vec[0];
+
+            for (const auto val : vec) {
+                if (val < ret)
+                    ret = val;
+            }
+
+            return ret;
+        }
+    }
 }
 
-#endif // !OPEN_ENGINE_INPUT_KEYBOARD_CHPP
+#endif // !OPEN_ENGINE_MATH_MATH_CHPP
+ 

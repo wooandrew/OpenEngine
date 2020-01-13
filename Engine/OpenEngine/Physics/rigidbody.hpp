@@ -40,31 +40,58 @@
 
 #pragma once
 
-#ifndef OPEN_ENGINE_INPUT_KEYBOARD_CHPP
-#define OPEN_ENGINE_INPUT_KEYBOARD_CHPP
+#ifndef OPEN_ENGINE_PHYSICS_RIGIDBODY_CHPP
+#define OPEN_ENGINE_PHYSICS_RIGIDBODY_CHPP
 
-#include <GLFW/src/glfw3.h>
+#include <ostream>
+#include <type_traits>
 
-namespace OpenEngine {
+#include <GLM/glm.hpp>
 
-	class Keyboard {
+#include <OpenEngine/Math/math.hpp>
 
-		/// OpenEngine -> Basic static keyboard key callback class \\\
+namespace OpenEngine { namespace Physics {
 
-	public:
+        class Rigidbody {
 
-		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
+            /// OpenEngine -> Rigidbody Class \\\
 
-		static bool KeyDown(int key);
-		static bool KeyUp(int key);
-		static bool KeyIsPressed(int key);
+        public:
 
-	private:
+            Rigidbody();
+            Rigidbody(const glm::vec3& _position, const glm::vec3& _size, const glm::vec3& _scale = glm::vec3(1.f));
 
-		static bool Keys[];
-		static bool KeysDown[];
-		static bool KeysUp[];
-	};
+            void Update(const glm::vec3& position, float rotation);
+
+            void SetScale(const glm::vec3& scale);
+
+            void MoveTo(const glm::vec3& pos);
+            void MoveBy(const glm::vec3& val, float dt);
+
+            const glm::vec3& GetPosition() const;
+
+            // Public Variables
+            float x;
+            float y;
+            float width;
+            float height;
+
+            glm::vec3 UpperLeftVertex;
+            glm::vec3 UpperRightVertex;
+            glm::vec3 LowerLeftVertex;
+            glm::vec3 LowerRightVertex;
+
+        private:
+
+            void UpdateVertices();
+
+            float LastRotation;
+
+            glm::vec3 position;
+            glm::vec3 size;
+            glm::vec3 scale;
+        };
+    }
 }
 
-#endif // !OPEN_ENGINE_INPUT_KEYBOARD_CHPP
+#endif // !OPEN_ENGINE_PHYSICS_RIGIDBODY_CHPP

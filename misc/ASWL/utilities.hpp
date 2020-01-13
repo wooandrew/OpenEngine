@@ -1,4 +1,4 @@
-// Utilities.hpp :: Andrew Woo, 2019
+// ASWL | utilities.hpp :: Andrew Woo, 2019
 
 #pragma once
 

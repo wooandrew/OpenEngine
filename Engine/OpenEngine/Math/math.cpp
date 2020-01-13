@@ -38,33 +38,37 @@
  * End License
 **/
 
-#pragma once
+#include "math.hpp"
 
-#ifndef OPEN_ENGINE_INPUT_KEYBOARD_CHPP
-#define OPEN_ENGINE_INPUT_KEYBOARD_CHPP
-
-#include <GLFW/src/glfw3.h>
+#include <GLM/gtx/projection.hpp>
 
 namespace OpenEngine {
 
-	class Keyboard {
+    namespace Math {
 
-		/// OpenEngine -> Basic static keyboard key callback class \\\
+        const glm::vec3& RotatePoint(glm::vec3& rotatepoint, const glm::vec3& pivotpoint, float rotation, AngleType type) {
 
-	public:
+            if (type == AngleType::degree)
+                rotation = ConvertToRadians<double>(static_cast<double>(rotation));
 
-		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
+            double sin = std::sin(rotation);
+            double cos = std::cos(rotation);
 
-		static bool KeyDown(int key);
-		static bool KeyUp(int key);
-		static bool KeyIsPressed(int key);
+            rotatepoint = rotatepoint - pivotpoint;
+            float newX = static_cast<float>((rotatepoint.x * cos) - (rotatepoint.y * sin));
+            float newY = static_cast<float>((rotatepoint.x * sin) + (rotatepoint.y * cos));
 
-	private:
+            rotatepoint.x = newX + pivotpoint.x;
+            rotatepoint.y = newY + pivotpoint.y;
 
-		static bool Keys[];
-		static bool KeysDown[];
-		static bool KeysUp[];
-	};
+            return rotatepoint;
+        }
+
+        const float dot(const glm::vec3& left, const glm::vec3& right) {
+            return (left.x * right.x) + (left.y + right.y) + (left.z + right.z);
+        }
+        const glm::vec3& project(const glm::vec3& left, const glm::vec3& right) {
+            return glm::proj(left, right);
+        }
+    }
 }
-
-#endif // !OPEN_ENGINE_INPUT_KEYBOARD_CHPP

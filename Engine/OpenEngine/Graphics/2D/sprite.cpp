@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -192,7 +192,7 @@ namespace OpenEngine {
 					//position.x += -sin(glm::radians(rotation)) * speed * dt;
 					position.y += /*cos(glm::radians(rotation)) */ speed * dt;
 				}
-				else if (Keyboard::KeyIsPressed(KeyMap::KM_Down) && !LockDown) {
+				if (Keyboard::KeyIsPressed(KeyMap::KM_Down) && !LockDown) {
 					//position.x -= -sin(glm::radians(rotation)) * speed * dt;
 					position.y -= /*cos(glm::radians(rotation)) */ speed * dt;
 				}
@@ -204,18 +204,18 @@ namespace OpenEngine {
 					position.x -= /*cos(glm::radians(rotation)) */ speed * dt;
 					//position.y -= sin(glm::radians(rotation)) * speed * dt;
 				}
-				else if (Keyboard::KeyIsPressed(KeyMap::KM_Right) && !LockRight) {
+				if (Keyboard::KeyIsPressed(KeyMap::KM_Right) && !LockRight) {
 					position.x += /*cos(glm::radians(rotation)) */ speed * dt;
 					//position.y += sin(glm::radians(rotation)) * speed * dt;
 				}
 			}
 
 			if (Keyboard::KeyIsPressed(KeyMap::rLeft)) {
-				rotation += 500.f * dt;
+				rotation += speed * dt;
 				rotation = std::fmodf(rotation, 360);
 			}
-			else if (Keyboard::KeyIsPressed(KeyMap::rRight)) {
-				rotation -= 500.f * dt;
+			if (Keyboard::KeyIsPressed(KeyMap::rRight)) {
+				rotation -= speed * dt;
 				rotation = std::fmodf(rotation, 360);
 			}
 		}
@@ -248,10 +248,6 @@ namespace OpenEngine {
 		this->speed = speed;
 	}
 
-	void Sprite::SetRotation(float rotation) {
-		this->rotation = rotation;
-	}
-
 	void Sprite::SetPosition(const float position) {
 		SetPosition({ position, position, position });
 	}
@@ -262,6 +258,10 @@ namespace OpenEngine {
 		this->position = position;
 	}
 
+	void Sprite::SetRotation(float rotation) {
+		this->rotation = rotation;
+	}
+	
 	void Sprite::SetScale(const float scale) {
 		SetScale({ 1.f, 1.f, 1.f });
 	}
@@ -272,14 +272,14 @@ namespace OpenEngine {
 		this->scale = scale;
 	}
 
+	const glm::vec3& Sprite::GetPosition() const {
+		return position;
+	}
 	const float Sprite::GetRotation() const {
 		return rotation;
 	}
 	const glm::vec3& Sprite::GetScale() const {
 		return scale;
-	}
-	const glm::vec3& Sprite::GetPosition() const {
-		return position;
 	}
 
 	const std::shared_ptr<Texture>& Sprite::GetTexture() const {

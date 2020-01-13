@@ -11,7 +11,14 @@ include_directories(misc ${CMAKE_CURRENT_SOURCE_DIR}/misc)
 include_directories(engine ${CMAKE_CURRENT_SOURCE_DIR}/Engine)
 
 add_library(
-	UtilitiesLib STATIC
+
+	ASWLLib STATIC
+
+	# Math
+	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWL/math.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWL/math.cpp
+
+	# Utilities
 	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWL/utilities.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/misc/ASWL/utilities.cpp
 )
@@ -23,6 +30,17 @@ add_library(
 	# Main
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/engine.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/engine.cpp
+
+	# Physics
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Physics/collision.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Physics/collision.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Physics/rigidbody.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Physics/rigidbody.cpp
+
+	# Math
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Math/math.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Math/math.cpp
 
 	# Audio
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Audio/audio.hpp
@@ -64,6 +82,9 @@ add_library(
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/2D/sprite.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/2D/sprite.cpp
 
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/2D/spritesheet.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/2D/spritesheet.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/2D/texture.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Engine/OpenEngine/Graphics/2D/texture.cpp
 
@@ -75,7 +96,7 @@ add_library(
 add_executable(OpenEngine "main.cpp")
 
 # Link Libraries
-target_link_libraries(OpenEngine PRIVATE UtilitiesLib)
+target_link_libraries(OpenEngine PRIVATE ASWLLib)
 target_link_libraries(OpenEngine PRIVATE EngineLib)
 
 # -> Assimp ???

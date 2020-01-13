@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -72,21 +72,23 @@ namespace OpenEngine {
 		void Lock(std::vector<MovementMacros> directions, std::vector<bool> lock);
 
 		void SetSpeed(float speed);
-		void SetRotation(float rotation);
 
 		void SetPosition(const float position);
 		void SetPosition(const glm::vec2& position);
 		void SetPosition(const glm::vec3& position);
+		
+		void SetRotation(float rotation);
 
 		void SetScale(const float scale);
 		void SetScale(const glm::vec2& scale);
 		void SetScale(const glm::vec3& scale);
 
+		const std::shared_ptr<Texture>& GetTexture() const;
+
+		const glm::vec3& GetPosition() const;
 		const float GetRotation() const;
 		const glm::vec3& GetScale() const;
-		const glm::vec3& GetPosition() const;
 
-		const std::shared_ptr<Texture>& GetTexture() const;
 
 	protected:
 
@@ -101,9 +103,9 @@ namespace OpenEngine {
 
 		float speed;
 
-		float rotation;
 		glm::vec3 position;
 		glm::vec3 scale;
+		float rotation;
 	};
 }
 

@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -45,6 +45,9 @@
 
 #include <OpenEngine/engine.hpp>
 
+#include <OpenEngine/Physics/collision.hpp>
+#include <OpenEngine/Physics/rigidbody.hpp>
+
 #include <OpenEngine/Audio/audio.hpp>
 
 #include <OpenEngine/Input/keyboard.hpp>
@@ -57,6 +60,7 @@
 #include <OpenEngine/Graphics/2D/renderer.hpp>
 #include <OpenEngine/Graphics/2D/splashscreen.hpp>
 #include <OpenEngine/Graphics/2D/sprite.hpp>
+#include <OpenEngine/Graphics/2D/spritesheet.hpp>
 #include <OpenEngine/Graphics/2D/texture.hpp>
 
 #include <ASWL/utilities.hpp>
@@ -163,16 +167,19 @@ int main() {
 	auto splash_logoh19 = std::make_shared<OpenEngine::SplashScreen>(splashLogo2);
 	auto splash_logo = std::make_shared<OpenEngine::SplashScreen>(splashLogo3);
 
-	OpenEngine::Sprite sprite(R"(C:\Users\Andrew\Pictures\aw.png)", { 0, 0 }, { 0.2f, 0.2f }, 500.f);
+	OpenEngine::Sprite sprite(R"(C:\Users\Andrew\Pictures\aw.png)", { 0, 0 }, { 0.2f, 0.2f }, 10.f);
 	auto spritePtr = std::make_shared<OpenEngine::Sprite>(sprite);
 
-	OpenEngine::Button button(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\test.png)", { 0, 0, 0.1 });
-	auto buttonPtr = std::make_shared<OpenEngine::Button>(button);
+	OpenEngine::UI::Button button(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\test.png)", { -405, -275, 0.1 });
+	auto buttonPtr = std::make_shared<OpenEngine::UI::Button>(button);
+
+	OpenEngine::SpriteSheet spritesheet(R"(C:\Users\Andrew\Documents\Projects\OpenEngine\Assets\ss.png)", 4, 4, 10.f, 500.f, { 0, 0 }, 1.f);
+	auto ssptr = std::make_shared<OpenEngine::SpriteSheet>(spritesheet);
 
 	OpenEngine::Graphics::BeginRender();
 	OpenEngine::Render2D::StartScene(PrimaryOrthoCam);
 
-	OpenEngine::Render2D::RenderSplashScreens(engine.GetWindow(), { 0, 0 }, { splash_logo1819, splash_logoh19, splash_logo });
+	// OpenEngine::Render2D::RenderSplashScreens(engine.GetWindow(), { 0, 0 }, { splash_logo1819, splash_logoh19, splash_logo });
 
 	OpenEngine::Render2D::EndScene();
 	OpenEngine::Graphics::EndRender(engine.GetWindow());
@@ -181,16 +188,23 @@ int main() {
 	
 	float zoom = 1.f;
 
+	OpenEngine::Physics::Rigidbody rb(spritePtr->GetPosition(), { spritePtr->GetTexture()->GetDimensions().width, spritePtr->GetTexture()->GetDimensions().height, 0 }, spritePtr->GetScale());
+
+	glm::vec3 rbPos = glm::vec3();
+	glm::vec3 rbSize = glm::vec3(50.f);
+	float rbRot = 0.0f;
+	OpenEngine::Physics::Rigidbody r1(rbPos, rbSize);
+
 	OpenEngine::Graphics::SetClearColor({ 1, 1, 1, 1 });
 	while (!glfwWindowShouldClose(engine.GetWindow()) && run) {
 
 		// *** GAME LOGIC *** //
 		if (OpenEngine::Keyboard::KeyIsPressed(OpenEngine::OEKeyboardKeys::OE_KEY_K)) {
-			zoom += 0.5f * dt.GetDeltaTime();
+			zoom += 0.5f * static_cast<float>(dt.GetDeltaTime());
 			PrimaryOrthoCam.SetZoom(zoom, OpenEngine::Engine::WindowDimensions);
 		}
 		else if (OpenEngine::Keyboard::KeyIsPressed(OpenEngine::OEKeyboardKeys::OE_KEY_L)) {
-			zoom -= 0.5f * dt.GetDeltaTime();
+			zoom -= 0.5f * static_cast<float>(dt.GetDeltaTime());
 			PrimaryOrthoCam.SetZoom(zoom, OpenEngine::Engine::WindowDimensions);
 		}
 
@@ -205,16 +219,31 @@ int main() {
 		dt.UpdateDeltaTime();
 		engine.Update();
 
-		PrimaryOrthoCam.UpdateCamera(dt.GetDeltaTime());
+		PrimaryOrthoCam.UpdateCamera(static_cast<float>(dt.GetDeltaTime()));
 
-		spritePtr->Update(dt.GetDeltaTime());
+		spritePtr->Update(static_cast<float>(dt.GetDeltaTime()));
+		ssptr->UpdateSprite(static_cast<float>(dt.GetDeltaTime()));
+
+		rb.Update(spritePtr->GetPosition(), spritePtr->GetRotation());
+		r1.Update(rbPos, rbRot);
 		// *** UPDATE *** //
 
 		// *** RENDER LOGIC *** //
 		OpenEngine::Graphics::BeginRender();
 
 		OpenEngine::Render2D::StartScene(PrimaryOrthoCam);
+		OpenEngine::Render2D::DrawQuad(rb.LowerLeftVertex, { 5, 5 }, { 2, 0, 0, 1 });
+		OpenEngine::Render2D::DrawQuad(rb.UpperLeftVertex, { 5, 5 }, { 2, 0, 0, 1 });
+		OpenEngine::Render2D::DrawQuad(rb.LowerRightVertex, { 5, 5 }, { 2, 0, 0, 1 });
+		OpenEngine::Render2D::DrawQuad(rb.UpperRightVertex, { 5, 5 }, { 2, 0, 0, 1 });
 		OpenEngine::Render2D::RenderSprite(spritePtr);
+
+
+		if (OpenEngine::Physics::Collision::SeparatingAxisTheorem(rb, r1))
+			OpenEngine::Render2D::DrawQuad(rbPos, rbSize, { 0, 255, 0, 1.f });
+		else
+			OpenEngine::Render2D::DrawQuad(rbPos, rbSize, { 0, 0, 0, 1.f });
+		//OpenEngine::Render2D::RenderSpriteSheet(ssptr);
 		OpenEngine::Render2D::EndScene();
 
 		OpenEngine::Render2D::StartScene(ButtonCam);

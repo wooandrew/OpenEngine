@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,

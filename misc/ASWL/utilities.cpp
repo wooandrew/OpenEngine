@@ -1,4 +1,4 @@
-// Utilities.cpp :: Andrew Woo, 2019
+// ASWL | utilities.cpp :: Andrew Woo, 2019
 
 #include "utilities.hpp"
 

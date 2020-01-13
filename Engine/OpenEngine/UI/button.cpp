@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -46,38 +46,41 @@
 
 namespace OpenEngine {
 
-	Button::Button(const std::string& path, const glm::vec3& position, const glm::vec2& scale) : Texture(path) {
-		this->position = position;
-		this->scale = scale;
-	}
+    namespace UI {
 
-	const glm::vec3& Button::GetPosition() const {
-		return position;
-	}
-	const glm::vec2& Button::GetScale() const {
-		return scale;
-	}
+        Button::Button(const std::string& path, const glm::vec3& position, const glm::vec2& scale) : Texture(path) {
+            this->position = position;
+            this->scale = scale;
+        }
 
-	void Button::SetPosition(const glm::vec3& position) {
-		this->position = position;
-	}
-	void Button::SetScale(const glm::vec2& scale) {
-		this->scale = scale;
-	}
+        const glm::vec3& Button::GetPosition() const {
+            return position;
+        }
+        const glm::vec2& Button::GetScale() const {
+            return scale;
+        }
 
-	const bool Button::IsPressed() const {
+        void Button::SetPosition(const glm::vec3& position) {
+            this->position = position;
+        }
+        void Button::SetScale(const glm::vec2& scale) {
+            this->scale = scale;
+        }
 
-		int mouseX = Mouse::GetMouseX();
-		int mouseY = Mouse::GetMouseY();
+        const bool Button::IsPressed() const {
 
-		int xMax = position.x + (TextureDimensions.width * scale.x) / 2;
-		int xMin = position.x - (TextureDimensions.width * scale.x) / 2;
-		int yMax = position.y + (TextureDimensions.height * scale.y) / 2;
-		int yMin = position.y - (TextureDimensions.height * scale.y) / 2;
+            int mouseX = Mouse::GetMouseX();
+            int mouseY = Mouse::GetMouseY();
 
-		if ((mouseX <= xMax) && (mouseX >= xMin) && (mouseY <= yMax) && (mouseY >= yMin))
-			return Mouse::ButtonIsPressed(KeyMap::KM_MouseLeft);
+            int xMax = position.x + (TextureDimensions.width * scale.x) / 2;
+            int xMin = position.x - (TextureDimensions.width * scale.x) / 2;
+            int yMax = position.y + (TextureDimensions.height * scale.y) / 2;
+            int yMin = position.y - (TextureDimensions.height * scale.y) / 2;
 
-		return false;
-	}
+            if ((mouseX <= xMax) && (mouseX >= xMin) && (mouseY <= yMax) && (mouseY >= yMin))
+                return Mouse::ButtonIsPressed(KeyMap::KM_MouseLeft);
+
+            return false;
+        }
+    }
 }

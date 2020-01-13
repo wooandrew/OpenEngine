@@ -40,31 +40,19 @@
 
 #pragma once
 
-#ifndef OPEN_ENGINE_INPUT_KEYBOARD_CHPP
-#define OPEN_ENGINE_INPUT_KEYBOARD_CHPP
+#ifndef OPEN_ENGINE_PHYSICS_COLLISION_CHPP
+#define OPEN_ENGINE_PHYSICS_COLLISION_CHPP
 
-#include <GLFW/src/glfw3.h>
+#include <OpenEngine/Physics/rigidbody.hpp>
 
-namespace OpenEngine {
+namespace OpenEngine { namespace Physics {
 
-	class Keyboard {
+        namespace Collision {
 
-		/// OpenEngine -> Basic static keyboard key callback class \\\
-
-	public:
-
-		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
-
-		static bool KeyDown(int key);
-		static bool KeyUp(int key);
-		static bool KeyIsPressed(int key);
-
-	private:
-
-		static bool Keys[];
-		static bool KeysDown[];
-		static bool KeysUp[];
-	};
+            bool AxisAlignedBoundingBox(const Rigidbody& left, const Rigidbody& right);
+            bool SeparatingAxisTheorem(const Rigidbody& left, const Rigidbody& right);
+        }
+    }
 }
 
-#endif // !OPEN_ENGINE_INPUT_KEYBOARD_CHPP
+#endif // !OPEN_ENGINE_PHYSICS_COLLISION_CHPP

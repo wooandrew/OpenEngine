@@ -1,33 +1,5 @@
 // Readability is King.
 
--> Window resize callback
--> Make function for std::shared_ptr<Texture>
--> Make function for std::shared_ptr<Sprite>
--> Splash screen animation
--> Sprite sheet animation
--> GLSL parser
--> Add repeating texture (background)
-
-Quality of Life Updates | 12/6/2019
-X - Change ASWU to ASWL (Andrew S. Woo Libraries)
-X - Add Float-type scale constructor for Splash Screens
-X - Change sprite private members to protected members
-X - Add Float-type scale constructor for Sprites
-X - Render texture with alpha
-X - Fix shaders (alpha blending broken)
-X - Reusable textures for different sprites (no inhertiance; separate texture variable)
-X - Add GetSpeed for OrthoCam
-X - Remove texture options from DrawQuad (unnecessary; RenderTexture does this)
-X - Add RemoveFile function in audio (UNTESTED)
-X - In image loader, specify which image could not be loaded
-X - For pre-implemented Sprite::Update, prevented movement when opposing keys are pressed
-X > Added origin to mouse position return
-X > Change SplashScreen structure such that it does not inherit from Texture class
-X > Made SplashScreen fadetime a requirement, no default value
-X > Various code optimizations
-X > Changed TextureDimensions type from unsigned int to int
-x > Added Graphics shutdown function (for future use; currently used for semantic purposes only)
-
 Feature Updates
   - Add physics elements (rigidbody, Separating Axis Theorem)
   - Add math elements (point rotate)
@@ -35,12 +7,8 @@ Feature Updates
   - Add Font Rendering
   - Add Active Camera
 
+OpenEngine
+  - Add Namespace Wrappers per folder -? OpenEngine::Graphics::2D::texture.hpp
 
-INCLUDE STRUCTURE
-
--> declaration header
-
--> C++ Standard Library Headers
--> Include Libraries
-
--> Related Libraries (ie, OpenEngine headers in OpenEngine)
+ASWL Utilities
+  - Rename namespace to ASWL::utilities or ASWL::util

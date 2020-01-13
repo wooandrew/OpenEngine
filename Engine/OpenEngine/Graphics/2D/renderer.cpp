@@ -1,11 +1,11 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
 /* OpenEngine is a game engine built on
  * OpenGL using related dependencies.
  *
- * This project is built on CMake using the MSVC C++ Comglm::pi<float>()ler
+ * This project is built on CMake using the MSVC C++ Compiler
  * This is to attempt Linux cross-compadibility, however, the
  * project itself was built on and is optimized for Windows.
  *
@@ -17,11 +17,11 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell coglm::pi<float>()es of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all coglm::pi<float>()es or substantial portions of the Software.
  *
@@ -51,6 +51,7 @@ namespace OpenEngine {
 
 		Render2DStorage() = default;
 
+		std::shared_ptr<VertexArray> SpriteSheetArray;
 		std::shared_ptr<VertexArray> QuadVertexArray;
 		std::shared_ptr<Shader> TextureShader;
 		std::shared_ptr<Texture> WhiteTexture;
@@ -63,12 +64,13 @@ namespace OpenEngine {
 		RenderData = new Render2DStorage();
 		RenderData->QuadVertexArray = std::make_shared<VertexArray>();
 
-		float squareVertices[5 * 4] = {
+		float squareVertices[] = {
 
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // Bottom Left
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Bottom Right
-			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // Top Right
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f  // Top Left 
+			// Positions			// Texture Coords
+			-0.5f, -0.5f, 0.0f,		0.0f, 0.0f, // Bottom Left
+			 0.5f, -0.5f, 0.0f,		1.0f, 0.0f, // Bottom Right
+			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, // Top Right
+			-0.5f,  0.5f, 0.0f,		0.0f, 1.0f  // Top Left 
 		};
 
 		std::shared_ptr<VertexBuffer> squareVB = std::make_shared<VertexBuffer>(squareVertices, sizeof(squareVertices));
@@ -218,19 +220,75 @@ namespace OpenEngine {
 
 		float scaleX = static_cast<float>(sprite->GetTexture()->GetDimensions().width) * sprite->GetScale().x;
 		float scaleY = static_cast<float>(sprite->GetTexture()->GetDimensions().height) * sprite->GetScale().y;
-		float scaleZ = 1.f * sprite->GetScale().z;
-
+		float scaleZ = sprite->GetScale().z;
+		
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), sprite->GetPosition());
 		transform = glm::rotate(transform, glm::radians(sprite->GetRotation()), glm::vec3(0.f, 0.f, 1.f));
 		transform = glm::scale(transform, { scaleX, scaleY, scaleZ });
 
 		RenderData->TextureShader->SetMat4("u_Transform", transform);
-
 		RenderData->QuadVertexArray->Bind();
+
 		Graphics::DrawIndexed(RenderData->QuadVertexArray);
 	}
+	void Render2D::RenderSpriteSheet(const std::shared_ptr<SpriteSheet>& spritesheet) {
 
-	void Render2D::RenderButton(const std::shared_ptr<Button>& button) {
+		if (spritesheet->GetUpdateTex()) {
+
+			RenderData->SpriteSheetArray = std::make_shared<VertexArray>();
+
+			float col = static_cast<float>(spritesheet->GetCol());
+			float row = static_cast<float>(spritesheet->GetRow());
+
+			float spriteWidth = static_cast<float>(spritesheet->GetSpriteDimensions().width);
+			float spriteHeight = static_cast<float>(spritesheet->GetSpriteDimensions().height);
+
+			float spriteSheetWidth = static_cast<float>(spritesheet->GetSpriteSheet()->GetDimensions().width);
+			float spriteSheetHeight = static_cast<float>(spritesheet->GetSpriteSheet()->GetDimensions().height);
+
+			float lX = (col * spriteWidth) / spriteSheetWidth;
+			float rX = ((col + 1) * spriteWidth) / spriteSheetWidth;
+			float bY = spriteSheetHeight - ((row + 1) * spriteHeight);
+			float tY = spriteSheetHeight - (row * spriteHeight);
+
+			float squareVertices[] = {
+
+				// Positions			// Texture Coords
+				-0.5f, -0.5f, 0.0f,		lX, bY / spriteSheetHeight,				// Bottom Left
+				 0.5f, -0.5f, 0.0f,		rX, bY / spriteSheetHeight,				// Bottom Right
+				 0.5f,  0.5f, 0.0f,		rX, tY / spriteSheetHeight,				// Top Right
+				-0.5f,  0.5f, 0.0f,		lX, tY / spriteSheetHeight				// Top Left 
+			};
+
+			std::shared_ptr<VertexBuffer> squareVB = std::make_shared<VertexBuffer>(squareVertices, sizeof(squareVertices));
+			squareVB->SetLayout({ { ShaderDataType::Float3, "a_Position" }, { ShaderDataType::Float2, "a_TexCoord" } });
+			RenderData->SpriteSheetArray->AddVertexBuffer(squareVB);
+
+			uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+			std::shared_ptr<IndexBuffer> squareIB = std::make_shared<IndexBuffer>(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
+			RenderData->SpriteSheetArray->SetIndexBuffer(squareIB);
+
+			spritesheet->SetUpdateTex(false);
+		}
+
+		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
+		spritesheet->GetSpriteSheet()->Bind();
+
+		float scaleX = static_cast<float>(spritesheet->GetSpriteDimensions().width) * spritesheet->GetSpriteScale().x;
+		float scaleY = static_cast<float>(spritesheet->GetSpriteDimensions().height) * spritesheet->GetSpriteScale().y;
+		float scaleZ = spritesheet->GetSpriteScale().z;
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), spritesheet->GetSpritePosition());
+		transform = glm::rotate(transform, glm::radians(spritesheet->GetSpriteRotation()), glm::vec3(0.f, 0.f, 1.f));
+		transform = glm::scale(transform, { scaleX, scaleY, scaleZ });
+
+		RenderData->TextureShader->SetMat4("u_Transform", transform);
+		RenderData->SpriteSheetArray->Bind();
+
+		Graphics::DrawIndexed(RenderData->SpriteSheetArray);
+	}
+
+	void Render2D::RenderButton(const std::shared_ptr<UI::Button>& button) {
 
 		RenderData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		button->Bind();

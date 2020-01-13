@@ -1,4 +1,4 @@
-// OpenEngine (c) Andrew Woo, 2019
+// OpenEngine (c) Andrew Woo, 2019-2020
 // Email: seungminleader@gmail.com
 // Website: https://wooandrew.github.io
 
@@ -17,7 +17,7 @@
  *
  * Start License
  *
- * Copyright 2019 Andrew Woo
+ * Copyright 2019-2020 Andrew Woo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -43,36 +43,37 @@
 #ifndef OPEN_ENGINE_UI_BUTTON
 #define OPEN_ENGINE_UI_BUTTON
 
-#include <iostream>
-
 #include <GLM/glm.hpp>
 
 #include <OpenEngine/Graphics/2D/texture.hpp>
 
 namespace OpenEngine {
 
-	class Button : public Texture {
+    namespace UI {
 
-		/// OpenEngine -> Basic UI button \\\
+        class Button : public Texture {
 
-	public:
+            /// OpenEngine -> Basic UI button \\\
 
-		Button() = default;
-		Button(const std::string& path, const glm::vec3& position, const glm::vec2& scale = glm::vec2(1.f));
+        public:
 
-		const glm::vec3& GetPosition() const;
-		const glm::vec2& GetScale() const;
+            Button() = default;
+            Button(const std::string& path, const glm::vec3& position, const glm::vec2& scale = glm::vec2(1.f));
 
-		void SetPosition(const glm::vec3& position);
-		void SetScale(const glm::vec2& scale);
+            const glm::vec3& GetPosition() const;
+            const glm::vec2& GetScale() const;
 
-		const bool IsPressed() const;
+            void SetPosition(const glm::vec3& position);
+            void SetScale(const glm::vec2& scale);
 
-	private:
+            const bool IsPressed() const;
 
-		glm::vec3 position;
-		glm::vec2 scale;
-	};
+        private:
+
+            glm::vec3 position;
+            glm::vec2 scale;
+        };
+    }
 }
 
 #endif // !OPEN_ENGINE_UI_BUTTON
