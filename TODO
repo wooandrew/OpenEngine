@@ -1,11 +1,16 @@
 // Readability is King.
 
 Feature Updates
-  - Add physics elements (rigidbody, Separating Axis Theorem)
-  - Add math elements (point rotate)
   - Add render layers
   - Add Font Rendering
   - Add Active Camera
+  - Add rigidbody to Sprite + SpriteSheets
+  - Add Convex Polygon object for better rigidbody physics
+  - Edit SAT to work with n-sided polygons
+
+Bug Fix
+  - Fix shaders
+  - Change Rotation management for rigidbody
 
 OpenEngine
   - Add Namespace Wrappers per folder -? OpenEngine::Graphics::2D::texture.hpp

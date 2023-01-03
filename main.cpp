@@ -179,7 +179,7 @@ int main() {
 	OpenEngine::Graphics::BeginRender();
 	OpenEngine::Render2D::StartScene(PrimaryOrthoCam);
 
-	// OpenEngine::Render2D::RenderSplashScreens(engine.GetWindow(), { 0, 0 }, { splash_logo1819, splash_logoh19, splash_logo });
+	OpenEngine::Render2D::RenderSplashScreens(engine.GetWindow(), { 0, 0 }, { splash_logo1819, splash_logoh19, splash_logo });
 
 	OpenEngine::Render2D::EndScene();
 	OpenEngine::Graphics::EndRender(engine.GetWindow());
@@ -238,12 +238,11 @@ int main() {
 		OpenEngine::Render2D::DrawQuad(rb.UpperRightVertex, { 5, 5 }, { 2, 0, 0, 1 });
 		OpenEngine::Render2D::RenderSprite(spritePtr);
 
-
 		if (OpenEngine::Physics::Collision::SeparatingAxisTheorem(rb, r1))
 			OpenEngine::Render2D::DrawQuad(rbPos, rbSize, { 0, 255, 0, 1.f });
 		else
 			OpenEngine::Render2D::DrawQuad(rbPos, rbSize, { 0, 0, 0, 1.f });
-		//OpenEngine::Render2D::RenderSpriteSheet(ssptr);
+		OpenEngine::Render2D::RenderSpriteSheet(ssptr);
 		OpenEngine::Render2D::EndScene();
 
 		OpenEngine::Render2D::StartScene(ButtonCam);
